@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "858334808557",
+    "project_id": "classocean-ca0da",
+    "storage_bucket": "classocean-ca0da.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:858334808557:android:a9fbde8816b590d70d3fe4",
+        "android_client_info": {
+          "package_name": "com.classocean.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOf4T5cWOIkzazFi1bjDzyw-h6ri605x0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:858334808557:android:6a6c0b635c0c6e7a0d3fe4",
+        "android_client_info": {
+          "package_name": "com.example.classocean"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOf4T5cWOIkzazFi1bjDzyw-h6ri605x0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

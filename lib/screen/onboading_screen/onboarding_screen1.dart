@@ -1,0 +1,42 @@
+import 'dart:async';
+
+import 'package:classocean/screen/onboading_screen/onboarding_screen2.dart';
+import 'package:classocean/screen/uihelper.dart';
+import 'package:flutter/material.dart';
+
+class OnboardingScreen1 extends StatefulWidget {
+  const OnboardingScreen1({super.key});
+
+  @override
+  State<OnboardingScreen1> createState() => _OnboardingScreen1State();
+}
+
+class _OnboardingScreen1State extends State<OnboardingScreen1> {
+  @override
+  void initState() {
+    super.initState();
+    Timer(Duration(seconds: 2), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => OnboardingScreen2()),
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.blue.shade600,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            UiHelper.CustomImage(imgurl: "Group 5.png"),
+            UiHelper.CustomImage(imgurl: "Text.png"),
+          ],
+        ),
+      ),
+    );
+  }
+}
