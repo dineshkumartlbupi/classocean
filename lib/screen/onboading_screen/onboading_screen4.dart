@@ -14,28 +14,28 @@ class OnboadingScreen4 extends StatelessWidget {
             SizedBox(height: 150),
             UiHelper.CustomImage(imgurl: "Group 3.png"),
             SizedBox(height: 50),
-            UiHelper.CustomImage(imgurl: "Ready to Start_.png"),
+             Text("Ready to Start?",style: TextStyle(fontSize: 32,color: Color(0xff625D5D),fontWeight: FontWeight.bold),),
             SizedBox(height: 20),
             Text(
               "Join of thousands of Schools",
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(fontSize: 20,color: Color(0xff625D5D)),
             ),
-            SizedBox(height: 12),
+            SizedBox(height: 10),
             Text(
               "Experience the Future of school ",
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(fontSize: 20,color: Color(0xff625D5D)),
             ),
-            Text("management with ClassOcean", style: TextStyle(fontSize: 20)),
-            SizedBox(height: 250,),
+            Text("management with ClassOcean", style: TextStyle(fontSize: 20,color: Color(0xff625D5D))),
+            SizedBox(height: 220,),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
+                backgroundColor: Color(0xff5DCCFC),
                 foregroundColor: Colors.white,
                 elevation: 0,
-                padding: EdgeInsets.symmetric(horizontal: 32, vertical: 14),
+                padding: EdgeInsets.only(left: 70,right: 70,bottom: 11,top: 11),
 
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+
                 ),
               ),
               onPressed: () {
@@ -44,6 +44,7 @@ class OnboadingScreen4 extends StatelessWidget {
               child: Text(
                 "GET STARTED ",
                 style: TextStyle(
+
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 1.5,

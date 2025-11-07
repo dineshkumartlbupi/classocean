@@ -20,7 +20,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           children: [
             SizedBox(height: 400),
             UiHelper.CustomImage(imgurl: "Welcome to Ocean classes.png"),
-            SizedBox(height: 10,),
+            SizedBox(height: 10),
             Text(
               "Best educators App",
               style: TextStyle(
@@ -29,17 +29,26 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 color: Colors.white,
               ),
             ),
-            SizedBox(height: 50,),
+            SizedBox(height: 50),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>RegistrationScreen()));
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => RegistrationScreen()),
+                );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
+                backgroundColor: Color(0xff5DCCFC),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(0),
                 ),
                 elevation: 0,
+                padding: EdgeInsets.only(
+                  left: 40,
+                  right: 40,
+                  bottom: 10,
+                  top: 10,
+                ),
               ),
               child: Text(
                 "CREATE AN ACCOUNT",
@@ -49,22 +58,34 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             SizedBox(height: 15),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
+                backgroundColor: Color(0xff5DCCFC),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(0),
                 ),
                 elevation: 0,
+                padding: EdgeInsets.only(
+                  left: 120,
+                  bottom: 10,
+                  right: 120,
+                  top: 10,
+                ),
               ),
               child: Text(
                 "LOGIN",
                 style: TextStyle(fontSize: 20, color: Colors.white),
               ),
             ),
-            SizedBox(height: 10,),
-            Text("Continue as Guest",style: TextStyle(fontSize: 20,color: Colors.white),)
+            SizedBox(height: 10),
+            Text(
+              "Continue as Guest",
+              style: TextStyle(fontSize: 20, color: Colors.white),
+            ),
           ],
         ),
       ),

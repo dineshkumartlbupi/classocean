@@ -21,19 +21,19 @@ class _OnboardingScreen2State extends State<OnboardingScreen2> {
             SizedBox(height: 30),
             UiHelper.CustomImage(imgurl: "Smart Attendance.png"),
             SizedBox(height: 15),
-            Text("Track with Ease", style: TextStyle(fontSize: 15)),
-            Text("Mark attendance quickly and generate"),
-            Text("automated reports from better insights"),
-            SizedBox(height: 300,),
+            UiHelper.CustomText(text: "Track with Ease", fontsize: 18,fontfamily: "bold",fontweight: FontWeight.bold,color: Color(0xff625D5D)),
+            Text("Mark attendance quickly and generate",style: TextStyle(fontSize: 18,color: Color(0xff625D5D),fontWeight: FontWeight.bold),),
+            Text("automated reports from better insights",style: TextStyle(fontSize: 18,color: Color(0xff625D5D)),),
+            SizedBox(height: 240,),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
+                backgroundColor: Color(0xff5DCCFC),
                 foregroundColor: Colors.white,
                 elevation: 0,
-                padding: EdgeInsets.symmetric(horizontal: 32, vertical: 14),
+                padding: EdgeInsets.only(left: 120,right: 120,top: 13,bottom: 13),
 
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+
                 ),
               ),
               onPressed: () {
@@ -42,9 +42,9 @@ class _OnboardingScreen2State extends State<OnboardingScreen2> {
               child: Text(
                 "NEXT",
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 22,
                   fontWeight: FontWeight.bold,
-                  letterSpacing: 1.5,
+                  letterSpacing: 1,
                 ),
               ),
             ),

@@ -26,13 +26,14 @@ class _OnboardingScreen1State extends State<OnboardingScreen1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue.shade600,
+      backgroundColor: Color(0xff5DCCFC),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             UiHelper.CustomImage(imgurl: "Group 5.png"),
+            SizedBox(height: 20),
             UiHelper.CustomImage(imgurl: "Text.png"),
           ],
         ),
