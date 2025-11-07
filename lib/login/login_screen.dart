@@ -1,5 +1,4 @@
 import 'package:classocean/dashBoard/dashBoard_screen.dart';
-import 'package:classocean/registration/registration_screen.dart';
 import 'package:classocean/screen/uihelper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -122,16 +121,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
+                    if(value == null ||value.isEmpty){
                       return 'Please enter your email';
                     }
-                    // Simple email regex
-                    if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                      return 'Please enter a valid email address';
-                    }
-                    return null;
-                  },
+                  }
                 ),
+
                 SizedBox(height: 16),
                 // Password Field
                 TextFormField(
@@ -163,14 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                           backgroundColor: Color(0xff5DCCFC),
                         ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => DashboardScreen(),
-                            ),
-                          );
-                        },
+                        onPressed: _submitAuthForm,
                         child: Text(
                           "Login",
                           style: TextStyle(
