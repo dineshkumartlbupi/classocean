@@ -1,9 +1,11 @@
 import 'package:classocean/dashBoard/dashBoard_screen.dart';
 import 'package:classocean/login/forgot_password_screen.dart';
+import 'package:classocean/screen/onboading_screen/onboarding_screen1.dart';
 import 'package:classocean/screen/onboading_screen/welcome_screen.dart';
 import 'package:classocean/screen/uihelper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -200,8 +202,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             shape: RoundedRectangleBorder(),
 
                             backgroundColor: Color(0xff5DCCFC),
-                          ),
-                          onPressed: _submitAuthForm,
+                          ), //_authSubmit
+                          onPressed: _submitAuthForm, //() async {
+                            // Successfully Logged in
+                           // var sharedPref = await SharedPreferences.getInstance();
+                           // sharedPref.setBool(OnboardingScreen1State.KEYLOGIN, true);
+                           // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>DashboardScreen()));
+                          //},
 
                           child: Text(
                             "Login",

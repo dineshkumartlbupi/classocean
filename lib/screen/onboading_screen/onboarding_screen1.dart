@@ -14,7 +14,7 @@ class OnboardingScreen1 extends StatefulWidget {
 
 class _OnboardingScreen1State extends State<OnboardingScreen1> {
 
-  static const String KEYLOGIN = "login";
+  //static const String KEYLOGIN = "login";
   @override
   void initState() {
     super.initState();
@@ -40,6 +40,25 @@ class _OnboardingScreen1State extends State<OnboardingScreen1> {
       ),
     );
   }
+  /*void whereToGo() async{
+    var sharedPref = await SharedPreferences.getInstance();
+     var isLoggedIn = sharedPref.getBool(KEYLOGIN);
+    Timer(Duration(seconds: 2),(){
+      if(isLoggedIn!=null){
+        if(isLoggedIn){
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>DashboardScreen()));
+        } else{
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+        }
+      } else {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+      }
+     // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+    });
+  }*/
+
+ }
 
 
-}
+
+
