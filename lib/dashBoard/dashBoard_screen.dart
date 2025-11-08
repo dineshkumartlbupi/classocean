@@ -13,7 +13,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: Text("Dash Baord"),
+        title: Text("Dash Board"),
       ),
     );
   }

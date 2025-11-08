@@ -1,25 +1,25 @@
 import 'dart:async';
 
+import 'package:classocean/dashBoard/dashBoard_screen.dart';
+import 'package:classocean/login/login_screen.dart';
 import 'package:classocean/screen/onboading_screen/onboarding_screen2.dart';
 import 'package:classocean/screen/uihelper.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingScreen1 extends StatefulWidget {
   const OnboardingScreen1({super.key});
-
-  @override
   State<OnboardingScreen1> createState() => _OnboardingScreen1State();
 }
 
 class _OnboardingScreen1State extends State<OnboardingScreen1> {
+
+  static const String KEYLOGIN = "login";
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 2), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => OnboardingScreen2()),
-      );
+    Timer(Duration(seconds: 2),(){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> OnboardingScreen2()));
     });
   }
 
@@ -40,4 +40,6 @@ class _OnboardingScreen1State extends State<OnboardingScreen1> {
       ),
     );
   }
+
+
 }

@@ -1,5 +1,6 @@
 import 'package:classocean/dashBoard/dashBoard_screen.dart';
 import 'package:classocean/login/login_screen.dart';
+import 'package:classocean/screen/onboading_screen/welcome_screen.dart';
 import 'package:classocean/screen/uihelper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +48,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var _mediaQuery = MediaQuery.of(context);
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.all(16.0),
@@ -56,11 +58,25 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             children: [
               Row(
                 children: [
-                  SizedBox(width: 10),
-                  Icon(Icons.arrow_back, color: Color(0xff3FBDF1)),
+                  SizedBox(width: 0),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => WelcomeScreen(),
+                        ),
+                      );
+                    },
+                    child: Icon(
+                      Icons.arrow_back,
+                      size: 40,
+                      color: Color(0xff3FBDF1),
+                    ),
+                  ),
                 ],
               ),
-              SizedBox(height: 15),
+              SizedBox(height: 10),
               Row(
                 children: [
                   SizedBox(width: 8),
@@ -79,7 +95,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               ),
               Row(children: [SizedBox(width: 8), Text("account")]),
 
-              SizedBox(height: 50),
+              SizedBox(height: _mediaQuery.size.height * 0.05),
               TextFormField(
                 controller: nameController,
                 decoration: InputDecoration(
@@ -88,7 +104,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ),
                 validator: (value) => value!.isEmpty ? 'Enter your name' : null,
               ),
-              SizedBox(height: 30),
+              SizedBox(height: _mediaQuery.size.height * 0.04),
               TextFormField(
                 controller: emailController,
                 decoration: InputDecoration(
@@ -100,7 +116,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ? 'Enter a valid email'
                     : null,
               ),
-              SizedBox(height: 30),
+              SizedBox(height: _mediaQuery.size.height * 0.04),
               TextFormField(
                 controller: passwordController,
                 decoration: InputDecoration(
@@ -112,7 +128,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ? 'Password must be at least 6 characters'
                     : null,
               ),
-              SizedBox(height: 30),
+              SizedBox(height: _mediaQuery.size.height * 0.04),
               TextFormField(
                 controller: confirmPasswordController,
                 decoration: InputDecoration(
@@ -124,7 +140,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ? 'Password do not match'
                     : null,
               ),
-              const SizedBox(height: 70),
+              SizedBox(height: _mediaQuery.size.height * 0.06),
               isLoding
                   ? const Center(child: CircularProgressIndicator())
                   : ElevatedButton(
@@ -142,7 +158,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ),
               Row(
                 children: [
-                  SizedBox(width: 80),
+                  SizedBox(width: _mediaQuery.size.width * 0.2),
                   Text(
                     "Already have an account?",
                     style: TextStyle(color: Color(0xff625D5D)),
