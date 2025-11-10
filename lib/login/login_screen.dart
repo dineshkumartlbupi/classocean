@@ -89,23 +89,29 @@ class _LoginScreenState extends State<LoginScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  SizedBox(height: _mediaQuery.size.height * 0.02),
+                  //SizedBox(height: _mediaQuery.size.height * 0.02),
                   Row(
                     children: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => WelcomeScreen(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SizedBox(width: _mediaQuery.size.width * 0.000000005),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => WelcomeScreen(),
+                                ),
+                              );
+                            },
+                            child: Icon(
+                              Icons.arrow_back,
+                              color: Color(0xff5DCCFC),
+                              size: 40,
                             ),
-                          );
-                        },
-                        child: Icon(
-                          Icons.arrow_back,
-                          color: Color(0xff5DCCFC),
-                          size: 40,
-                        ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -155,11 +161,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       border: OutlineInputBorder(),
                     ),
                     keyboardType: TextInputType.emailAddress,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
+                    validator: (value) => value!.isEmpty ? 'Enter your email' : null/* {
+                      if (value! == null || value.isEmpty) {
                         return 'Please enter your email';
                       }
-                    },
+                    },*/
                   ),
 
                   SizedBox(height: _mediaQuery.size.height * 0.04),
@@ -204,12 +210,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             backgroundColor: Color(0xff5DCCFC),
                           ), //_authSubmit
                           onPressed: _submitAuthForm, //() async {
-                            // Successfully Logged in
-                           // var sharedPref = await SharedPreferences.getInstance();
-                           // sharedPref.setBool(OnboardingScreen1State.KEYLOGIN, true);
-                           // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>DashboardScreen()));
-                          //},
 
+                          // Successfully Logged in
+                          // var sharedPref = await SharedPreferences.getInstance();
+                          // sharedPref.setBool(OnboardingScreen1State.KEYLOGIN, true);
+                          // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>DashboardScreen()));
+                          //},
                           child: Text(
                             "Login",
                             style: TextStyle(

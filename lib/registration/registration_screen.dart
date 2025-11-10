@@ -163,13 +163,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     "Already have an account?",
                     style: TextStyle(color: Color(0xff625D5D)),
                   ),
-                  Text(
+                  TextButton(onPressed: (){
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>RegistrationScreen()));
+                  }, child: Text(
                     "Sign in",
                     style: TextStyle(
                       color: Colors.blue,
                       fontWeight: FontWeight.bold,
                     ),
-                  ),
+                  ),)
+                  /*Text(
+                    "Sign in",
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),*/
                 ],
               ),
             ],
