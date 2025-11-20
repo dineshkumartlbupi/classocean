@@ -1,4 +1,5 @@
 import 'package:classocean/dashBoard/dashBoard_screen.dart';
+import 'package:classocean/design/bottomnavscreen/bottom_nav_screen.dart';
 import 'package:classocean/login/login_screen.dart';
 import 'package:classocean/registration/registration_screen.dart';
 import 'package:classocean/screen/uihelper.dart';
@@ -91,7 +92,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => DashboardScreen()),
+                    MaterialPageRoute(builder: (context) => BottomNavScreen()),
                   );
                 },
                 child: Text(

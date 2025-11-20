@@ -1,4 +1,5 @@
 import 'package:classocean/dashBoard/dashBoard_screen.dart';
+import 'package:classocean/design/bottomnavscreen/bottom_nav_screen.dart';
 import 'package:classocean/login/login_screen.dart';
 import 'package:classocean/screen/onboading_screen/welcome_screen.dart';
 import 'package:classocean/screen/uihelper.dart';
@@ -34,7 +35,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         ).showSnackBar(SnackBar(content: Text("Registered Successfully")));
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => DashboardScreen()),
+          MaterialPageRoute(builder: (context) => BottomNavScreen()),
         );
       } on FirebaseAuthException catch (e) {
         ScaffoldMessenger.of(
