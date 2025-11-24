@@ -2,10 +2,9 @@ import 'package:classocean/dashBoard/atten/attend_screen.dart';
 import 'package:classocean/dashBoard/overview/overview_screen.dart';
 import 'package:classocean/dashBoard/report/report_screen.dart';
 import 'package:classocean/dashBoard/set_screen/set_screen.dart';
-import 'package:classocean/design/attendanceScreen/attendance_screen.dart';
-import 'package:classocean/design/homeScreen/home_screen.dart';
+
 import 'package:classocean/design/profileScreen/profile_screen.dart';
-import 'package:classocean/design/studentsScreen/students_screen.dart';
+
 import 'package:flutter/material.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -157,10 +156,14 @@ class _DashboardScreenState extends State<DashboardScreen>
             radius: 18,
             backgroundColor: Colors.teal,
             child: Text("LA", style: TextStyle(color: Colors.white)),
-
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => ProfileScreen()),
+              );
+            },
             icon: Icon(Icons.menu, color: Colors.black),
           ),
         ],
@@ -190,7 +193,7 @@ class _DashboardScreenState extends State<DashboardScreen>
       body: TabBarView(
         controller: _tabController,
         children: [
-         OverviewScreen(),
+          OverviewScreen(),
           AttendScreen(),
           ReportScreen(),
           SetScreen(),

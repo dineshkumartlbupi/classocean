@@ -1,11 +1,11 @@
 import 'package:classocean/dashBoard/dashBoard_screen.dart';
+import 'package:classocean/design/bottomnavscreen/bottom_nav_screen.dart';
 import 'package:classocean/login/forgot_password_screen.dart';
-import 'package:classocean/screen/onboading_screen/onboarding_screen1.dart';
+
 import 'package:classocean/screen/onboading_screen/welcome_screen.dart';
 import 'package:classocean/screen/uihelper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -48,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (mounted) {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (_) => DashboardScreen()),
+            MaterialPageRoute(builder: (_) => BottomNavScreen()),
           );
         }
       }
@@ -161,11 +161,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       border: OutlineInputBorder(),
                     ),
                     keyboardType: TextInputType.emailAddress,
-                    validator: (value) => value!.isEmpty ? 'Enter your email' : null/* {
+                    validator: (value) =>
+                        value!.isEmpty ? 'Enter your email' : null /* {
                       if (value! == null || value.isEmpty) {
                         return 'Please enter your email';
                       }
-                    },*/
+                    },*/,
                   ),
 
                   SizedBox(height: _mediaQuery.size.height * 0.04),
@@ -210,7 +211,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             backgroundColor: Color(0xff5DCCFC),
                           ), //_authSubmit
                           onPressed: _submitAuthForm, //() async {
-
                           // Successfully Logged in
                           // var sharedPref = await SharedPreferences.getInstance();
                           // sharedPref.setBool(OnboardingScreen1State.KEYLOGIN, true);

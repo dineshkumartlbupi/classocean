@@ -1,3 +1,4 @@
+import 'package:classocean/design/studentsScreen/student_screen.dart';
 import 'package:flutter/material.dart';
 
 class OverviewScreen extends StatelessWidget {
@@ -6,34 +7,52 @@ class OverviewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       backgroundColor: const Color(0xFFF7F9FB),
+      
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
+        padding: const EdgeInsets.all(1),
         decoration: BoxDecoration(
           color: const Color(0xFF2F6BFF),
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
               color: Colors.blue.withOpacity(0.3),
               blurRadius: 12,
               offset: const Offset(0, 6),
-            )
+            ),
           ],
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
-          children: const [
+          children: [
             Icon(Icons.add, color: Colors.white),
-            SizedBox(width: 8),
-            Text(
+            TextButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => StudentScreen()),
+                );
+              },
+              child: Text(
+                "Quick Add",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+
+           /* Text(
               "Quick Add",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
               ),
-            )
+            )*/
           ],
         ),
       ),
@@ -161,7 +180,7 @@ class OverviewScreen extends StatelessWidget {
                     color: Colors.black.withOpacity(0.05),
                     blurRadius: 12,
                     offset: const Offset(0, 6),
-                  )
+                  ),
                 ],
               ),
               child: const Text(
@@ -173,7 +192,7 @@ class OverviewScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 3,),
+            SizedBox(height: 3),
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -184,7 +203,7 @@ class OverviewScreen extends StatelessWidget {
                     color: Colors.black.withOpacity(0.05),
                     blurRadius: 12,
                     offset: const Offset(0, 6),
-                  )
+                  ),
                 ],
               ),
               child: const Text(
@@ -196,7 +215,7 @@ class OverviewScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 3,),
+            SizedBox(height: 3),
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -207,7 +226,7 @@ class OverviewScreen extends StatelessWidget {
                     color: Colors.black.withOpacity(0.05),
                     blurRadius: 12,
                     offset: const Offset(0, 6),
-                  )
+                  ),
                 ],
               ),
               child: const Text(
@@ -219,7 +238,6 @@ class OverviewScreen extends StatelessWidget {
                 ),
               ),
             ),
-
 
             const SizedBox(height: 80), // space above floating button
           ],
@@ -266,11 +284,7 @@ class OverviewScreen extends StatelessWidget {
                 ),
                 child: Icon(icon, color: iconColor, size: 22),
               ),
-              Container(
-                height: 3,
-                width: 20,
-                color: lineColor,
-              ),
+              Container(height: 3, width: 20, color: lineColor),
             ],
           ),
           const SizedBox(height: 20),
@@ -278,19 +292,13 @@ class OverviewScreen extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             title,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-            ),
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
           ),
           if (subtitle.isNotEmpty) ...[
             const SizedBox(height: 3),
             Text(
               subtitle,
-              style: TextStyle(
-                fontSize: 15,
-                color: Colors.grey.shade500,
-              ),
+              style: TextStyle(fontSize: 15, color: Colors.grey.shade500),
             ),
           ],
           const SizedBox(height: 10),
@@ -310,40 +318,37 @@ class OverviewScreen extends StatelessWidget {
     required Color borderColor,
   }) {
     return Container(
-        padding: const EdgeInsets.all(18),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(22),
-          border: Border.all(color: borderColor, width: 1.3),
-        ),
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: 42,
-                width: 42,
-                decoration: BoxDecoration(
-                  color: iconBg,
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                child: Icon(icon, color: iconColor, size: 22),
-              ),
-              const SizedBox(height: 12),
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF101623),
-                ),
-              ),
-              const SizedBox(height: 2),
-              Text(
-                subtitle,
-                style: TextStyle(color: Colors.grey.shade500),
-              ),
-            ],
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(22),
+        border: Border.all(color: borderColor, width: 1.3),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            height: 42,
+            width: 42,
+            decoration: BoxDecoration(
+              color: iconBg,
+              borderRadius: BorderRadius.circular(14),
             ),
-        );
-    }
+            child: Icon(icon, color: iconColor, size: 22),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF101623),
+            ),
+          ),
+          const SizedBox(height: 2),
+          Text(subtitle, style: TextStyle(color: Colors.grey.shade500)),
+        ],
+      ),
+    );
+  }
 }

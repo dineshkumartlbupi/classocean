@@ -1,6 +1,6 @@
 import 'package:classocean/design/attendanceScreen/attendance_screen.dart';
 import 'package:classocean/design/profileScreen/profile_screen.dart';
-import 'package:classocean/design/studentsScreen/students_screen.dart';
+import 'package:classocean/design/studentsScreen/student_screen.dart';
 import 'package:classocean/home/fees_screen.dart';
 import 'package:classocean/home/notice_screen.dart';
 import 'package:classocean/home/time_table_screen.dart';
@@ -75,7 +75,7 @@ class HomeScreen extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => const StudentScreen()),
+                MaterialPageRoute(builder: (_) =>  StudentScreen()),
               );
             },
           ),

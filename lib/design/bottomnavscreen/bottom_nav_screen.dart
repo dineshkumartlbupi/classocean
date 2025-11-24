@@ -1,8 +1,8 @@
 import 'package:classocean/dashBoard/dashBoard_screen.dart';
-import 'package:classocean/dashBoard/overview/overview_screen.dart';
+
 import 'package:classocean/design/attendanceScreen/attendance_screen.dart';
 import 'package:classocean/design/profileScreen/profile_screen.dart';
-import 'package:classocean/design/studentsScreen/students_screen.dart';
+import 'package:classocean/design/studentsScreen/student_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -50,7 +50,6 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
           setState(() {
             currentIndex = value;
           });
-
         },
       ),
       body: IndexedStack(children: pages, index: currentIndex),
