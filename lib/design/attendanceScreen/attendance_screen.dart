@@ -1,7 +1,10 @@
+import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 class AttendanceScreen extends StatefulWidget {
   const AttendanceScreen({super.key});
@@ -11,120 +14,392 @@ class AttendanceScreen extends StatefulWidget {
 }
 
 class _AttendanceScreenState extends State<AttendanceScreen> {
-  bool showCalendar = false;
-  bool showClassSection = false;
-  DateTime selectedDay = DateTime.now();
-  String selectedClass = "Select Class";
-  List<String> classSections = ["Class 6", "Class 6", "Class 7", "Class 8"];
+  final studentsRef = FirebaseFirestore.instance.collection('students');
+  final attendanceRef = FirebaseFirestore.instance.collection('attendance');
 
-  // Dummy periods
-  List<String> periods = [
-    "Period 1",
-    "Period 2",
-    "Period 3",
-    "Period 4",
-    "Period 5",
-    "Period 6",
-    "Period 7"
-  ];
+  DateTime selectedDate = DateTime.now();
+
+  String get dateId => DateFormat('yyyy-MM-dd').format(selectedDate);
+
+  final ImagePicker _picker = ImagePicker();
+
+  // --- Pick a local image file using image_picker (gallery)
+  Future<File?> _pickLocalImage() async {
+    final XFile? picked = await _picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 80,
+    );
+    if (picked == null) return null;
+    return File(picked.path);
+  }
+
+  // --- Upload file to Firebase Storage and return download URL
+  Future<String> _uploadFile(File file) async {
+    final fileName =
+        'student_images/${DateTime.now().millisecondsSinceEpoch}.jpg';
+    final ref = FirebaseStorage.instance.ref().child(fileName);
+    final uploadTask = await ref.putFile(file);
+    final url = await uploadTask.ref.getDownloadURL();
+    return url;
+  }
+
+  // --- Add Student dialog: choose gallery image OR provide URL. Preview shown.
+  void _showAddStudentDialog() {
+    final nameCtrl = TextEditingController();
+    final classCtrl = TextEditingController();
+    final sectionCtrl = TextEditingController();
+    final urlCtrl = TextEditingController();
+    File? pickedLocalFile;
+    String? previewNetworkUrl;
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setStateDialog) {
+            Widget avatarPreview() {
+              if (pickedLocalFile != null) {
+                return CircleAvatar(
+                  radius: 42,
+                  backgroundImage: FileImage(pickedLocalFile!),
+                );
+              } else if (previewNetworkUrl != null &&
+                  previewNetworkUrl!.isNotEmpty) {
+                return CircleAvatar(
+                  radius: 42,
+                  backgroundImage: NetworkImage(previewNetworkUrl!),
+                );
+              } else {
+                return const CircleAvatar(
+                  radius: 42,
+                  child: Icon(Icons.person, size: 36),
+                );
+              }
+            }
+
+            Future<void> pickFromGallery() async {
+              final file = await _pickLocalImage();
+              if (file != null) {
+                setStateDialog(() {
+                  pickedLocalFile = file;
+                  // clear url input since local chosen
+                  urlCtrl.clear();
+                  previewNetworkUrl = null;
+                });
+              }
+            }
+
+            void setNetworkPreview() {
+              final url = urlCtrl.text.trim();
+              setStateDialog(() {
+                previewNetworkUrl = url.isEmpty ? null : url;
+                pickedLocalFile = null;
+              });
+            }
+
+            Future<void> addStudent() async {
+              final name = nameCtrl.text.trim();
+              final classText = classCtrl.text.trim();
+              final sectionText = sectionCtrl.text.trim();
+              String? finalImageUrl;
+
+              if (pickedLocalFile != null) {
+                // Upload to Firebase Storage and get URL
+                try {
+                  finalImageUrl = await _uploadFile(pickedLocalFile!);
+                } catch (e) {
+                  // show simple error and return (do not close dialog)
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Image upload failed: $e')),
+                    );
+                  }
+                  return;
+                }
+              } else if (urlCtrl.text.trim().isNotEmpty) {
+                finalImageUrl = urlCtrl.text.trim();
+              } else {
+                finalImageUrl = null;
+              }
+
+              // Basic validation
+              if (name.isEmpty) {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Please enter student name')),
+                  );
+                }
+                return;
+              }
+
+              // Save student doc
+              await studentsRef.add({
+                'name': name,
+                'class': classText,
+                'section': sectionText,
+                'imageUrl': finalImageUrl,
+                'createdAt': FieldValue.serverTimestamp(),
+              });
+
+              if (context.mounted) Navigator.pop(context);
+            }
+
+            return AlertDialog(
+              title: const Text('Add Student'),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    GestureDetector(
+                      onTap: pickFromGallery,
+                      child: avatarPreview(),
+                    ),
+                    const SizedBox(height: 8),
+                    TextButton.icon(
+                      onPressed: pickFromGallery,
+                      icon: const Icon(Icons.photo_library),
+                      label: const Text('Pick from Gallery'),
+                    ),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: urlCtrl,
+                      keyboardType: TextInputType.url,
+                      decoration: const InputDecoration(
+                        labelText: 'Image URL (optional)',
+                        hintText: 'https://example.com/photo.jpg',
+                      ),
+                      onChanged: (_) => setNetworkPreview(),
+                    ),
+                    const SizedBox(height: 12),
+                    TextField(
+                      controller: nameCtrl,
+                      decoration: const InputDecoration(labelText: 'Name'),
+                    ),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: classCtrl,
+                      decoration: const InputDecoration(labelText: 'Class'),
+                    ),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: sectionCtrl,
+                      decoration: const InputDecoration(labelText: 'Section'),
+                    ),
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('Cancel'),
+                ),
+                ElevatedButton(onPressed: addStudent, child: const Text('Add')),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  // --- Listen to attendance document for a student on the selected date and return bool stream
+  Stream<bool> _studentAttendanceStream(String studentId) {
+    return attendanceRef
+        .doc(dateId)
+        .collection('records')
+        .doc(studentId)
+        .snapshots()
+        .map((snap) {
+          if (!snap.exists) return false;
+          final data = snap.data();
+          if (data == null) return false;
+          return (data['isPresent'] ?? false) as bool;
+        });
+  }
+
+  // --- Toggle attendance state
+  Future<void> _toggleAttendance(String studentId, bool current) async {
+    await attendanceRef.doc(dateId).collection('records').doc(studentId).set({
+      'isPresent': !current,
+      'updatedAt': FieldValue.serverTimestamp(),
+    });
+  }
+
+  // --- Date picker
+  Future<void> _pickDate() async {
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+    if (picked != null && picked != selectedDate) {
+      setState(() => selectedDate = picked);
+    }
+  }
+
+  // --- Optional: show counts for selected date
+  Widget _attendanceSummary(List<QueryDocumentSnapshot> studentsDocs) {
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6),
+      child: Row(
+        children: [
+          Text(
+            'Date: $dateId',
+            style: const TextStyle(fontWeight: FontWeight.w600),
+          ),
+          const Spacer(),
+          Text('Total: ${studentsDocs.length}'),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Attendance Marking",style: TextStyle(color: Colors.black,fontSize: 25),
+      appBar: AppBar(
+        title: const Text('Attendance'),
+        actions: [
+          IconButton(
+            onPressed: _pickDate,
+            icon: const Icon(Icons.calendar_month),
           ),
-        ),
-        body: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _showAddStudentDialog,
+        child: const Icon(Icons.person_add),
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: Row(
               children: [
-
-                // Calendar toggle button
-               /* ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      showCalendar = !showCalendar;
-                    });
-                  },
-                  child: const Text("Select Date"),
-                ),*/
-
-                // Calendar visible when tapped
-                AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 300),
-                  child: showCalendar
-                      ? Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: TableCalendar(
-                      focusedDay: selectedDay,
-                      firstDay: DateTime(2020),
-                      lastDay: DateTime(2100),
-                      selectedDayPredicate: (day) => isSameDay(day, selectedDay),
-                      onDaySelected: (selected, focused) {
-                        setState(() {
-                          selectedDay = selected;
-                          showCalendar = false;
-                        });
-                      },
-                    ),
-                  )
-                      : const SizedBox.shrink(),
-                ),
-
-                const SizedBox(height: 20),
-
-                // Class selection button
-
-
-                // Show class sections
-                if (showClassSection)
-                  Column(
-                    children: classSections.map((section) {
-                      return ListTile(
-                        title: Text(section),
-                        onTap: () {
-                          setState(() {
-                            selectedClass = section;
-                            showClassSection = false;
-                          });
-                        },
-                      );
-                    }).toList(),
+                Text(
+                  'Selected Date: $dateId',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
                   ),
-
-                const SizedBox(height: 20),
-
-                const Text(
-                  "Periods",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-
-                const SizedBox(height: 8),
-
-                // Scrollable horizontal periods row
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: periods.map((period) {
-                      return Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 6),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("Selected $period")),
-                            );
-                          },
-                          child: Text(period),
-                        ),
-                      );
-                    }).toList(),
-                  ),
+                const SizedBox(width: 12),
+                ElevatedButton.icon(
+                  onPressed: _pickDate,
+                  icon: const Icon(Icons.edit_calendar),
+                  label: const Text('Change Date'),
                 ),
               ],
             ),
+          ),
+
+          Expanded(
+            child: StreamBuilder<QuerySnapshot>(
+              stream: studentsRef.orderBy('name').snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError)
+                  return const Center(child: Text('Error loading students'));
+                if (!snapshot.hasData)
+                  return const Center(child: CircularProgressIndicator());
+
+                final docs = snapshot.data!.docs;
+
+                if (docs.isEmpty) {
+                  return Center(
+                    child: Text(
+                      'No students yet.\nTap + to add a student',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.grey[700]),
+                    ),
+                  );
+                }
+
+                return Column(
+                  children: [
+                    _attendanceSummary(docs),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: docs.length,
+                        itemBuilder: (context, index) {
+                          final doc = docs[index];
+                          final id = doc.id;
+                          final data = doc.data() as Map<String, dynamic>;
+                          final name = data['name'] ?? '';
+                          final classText = data['class'] ?? '';
+                          final sectionText = data['section'] ?? '';
+                          final imageUrl = data['imageUrl'] as String?;
+
+                          return StreamBuilder<bool>(
+                            stream: _studentAttendanceStream(id),
+                            builder: (context, attSnap) {
+                              final isPresent = attSnap.data ?? false;
+                              return Card(
+                                margin: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 6,
+                                ),
+                                child: ListTile(
+                                  leading: CircleAvatar(
+                                    radius: 28,
+                                    backgroundColor: Colors.grey.shade200,
+                                    backgroundImage:
+                                        (imageUrl != null &&
+                                            imageUrl.isNotEmpty)
+                                        ? NetworkImage(imageUrl)
+                                        : null,
+                                    child:
+                                        (imageUrl == null || imageUrl.isEmpty)
+                                        ? const Icon(Icons.person, size: 28)
+                                        : null,
+                                  ),
+                                  title: Text(
+                                    name,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  subtitle: Text(
+                                    'Class: $classText   |   Section: $sectionText',
+                                  ),
+                                  trailing: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        isPresent ? 'Present' : 'Absent',
+                                        style: TextStyle(
+                                          color: isPresent
+                                              ? Colors.green
+                                              : Colors.red,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Switch(
+                                        value: isPresent,
+                                        onChanged: (_) =>
+                                            _toggleAttendance(id, isPresent),
+                                      ),
+                                    ],
+                                  ),
+                                  onTap: () {
+                                    // Optionally show student detail or quick toggle
+                                    _toggleAttendance(id, isPresent);
+                                  },
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
-        );
-    }
+          ),
+        ],
+      ),
+    );
+  }
 }
