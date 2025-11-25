@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:flutter/material.dart';
 
 class StudentScreen extends StatefulWidget {
@@ -108,7 +107,7 @@ class _StudentScreenState extends State<StudentScreen> {
                 leading: CircleAvatar(child: Text(firstLetter)),
                 title: Text(doc['name']),
                 subtitle: Text(
-                  'Class: ${doc['class']}  |  Roll: ${doc['roll']}\nPhone: ${doc['phone']}\nFather: ${doc['father']}  |  Section: ${doc['section']}',
+                  'Class: ${doc['class']}  | Roll: ${doc['roll']}\nPhone: ${doc['phone']}\nFather: ${doc['father']}  |  Section: ${doc['section']}',
                 ),
                 isThreeLine: true,
               );
