@@ -1,6 +1,4 @@
-
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +46,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
   void _showAddStudentDialog() {
     final nameCtrl = TextEditingController();
     final classCtrl = TextEditingController();
+    final rollCtrl = TextEditingController();
     final sectionCtrl = TextEditingController();
     final urlCtrl = TextEditingController();
     File? pickedLocalFile;
@@ -101,6 +100,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
             Future<void> addStudent() async {
               final name = nameCtrl.text.trim();
               final classText = classCtrl.text.trim();
+              final rollText = rollCtrl.text.trim();
               final sectionText = sectionCtrl.text.trim();
               String? finalImageUrl;
 
@@ -137,6 +137,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
               await studentsRef.add({
                 'name': name,
                 'class': classText,
+                'roll':rollText,
                 'section': sectionText,
                 'imageUrl': finalImageUrl,
                 'createdAt': FieldValue.serverTimestamp(),
@@ -180,6 +181,10 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                     TextField(
                       controller: classCtrl,
                       decoration: const InputDecoration(labelText: 'Class'),
+                    ),
+                    TextField(
+                      controller: rollCtrl,
+                      decoration: InputDecoration(labelText: 'roll'),
                     ),
                     const SizedBox(height: 8),
                     TextField(
@@ -269,10 +274,10 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
+     /* floatingActionButton: FloatingActionButton(
         onPressed: _showAddStudentDialog,
         child: const Icon(Icons.person_add),
-      ),
+      ),*/
       body: Column(
         children: [
           Padding(
@@ -329,6 +334,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                           final data = doc.data() as Map<String, dynamic>;
                           final name = data['name'] ?? '';
                           final classText = data['class'] ?? '';
+                          final rollText = data['roll'] ?? '';
                           final sectionText = data['section'] ?? '';
                           final imageUrl = data['imageUrl'] as String?;
 
