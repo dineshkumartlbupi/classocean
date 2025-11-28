@@ -2,9 +2,6 @@ import 'package:classocean/dashBoard/atten/attend_screen.dart';
 import 'package:classocean/dashBoard/overview/overview_screen.dart';
 import 'package:classocean/dashBoard/report/report_screen.dart';
 import 'package:classocean/dashBoard/set_screen/set_screen.dart';
-
-import 'package:classocean/design/profileScreen/profile_screen.dart';
-
 import 'package:flutter/material.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -38,7 +35,7 @@ class _DashboardScreenState extends State<DashboardScreen>
     return Container(
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colors.blue,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -51,7 +48,7 @@ class _DashboardScreenState extends State<DashboardScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: color ?? Colors.indigo, size: 28),
+          Icon(icon, color: color ?? Colors.indigo, size: 20),
           SizedBox(height: 12),
           Text(
             title,
@@ -109,6 +106,7 @@ class _DashboardScreenState extends State<DashboardScreen>
 
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: buildAppDrawer(context),
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -157,12 +155,10 @@ class _DashboardScreenState extends State<DashboardScreen>
             backgroundColor: Colors.teal,
             child: Text("LA", style: TextStyle(color: Colors.white)),
           ),
+          // Menu button opens Drawer
           IconButton(
             onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => ProfileScreen()),
-              );
+              Scaffold.of(context).openDrawer();
             },
             icon: Icon(Icons.menu, color: Colors.black),
           ),
@@ -170,16 +166,27 @@ class _DashboardScreenState extends State<DashboardScreen>
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(45),
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.all(6),
             child: TabBar(
               controller: _tabController,
+              isScrollable: true, // new add
               labelColor: Colors.white,
+              labelPadding: EdgeInsets.symmetric(horizontal: 10),
               unselectedLabelColor: Colors.black,
               indicator: BoxDecoration(
-                color: Colors.indigo,
-                borderRadius: BorderRadius.circular(5),
+                color: Color(0xFF5DCCFC),
+                borderRadius: BorderRadius.circular(40),
               ),
-              labelStyle: TextStyle(fontWeight: FontWeight.w600),
+              indicatorPadding: EdgeInsets.symmetric(
+                horizontal: -6,
+                vertical: 4,
+              ),
+
+              labelStyle: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                color: Colors.grey,
+              ),
               tabs: [
                 Tab(text: "Overview"),
                 Tab(text: "Attendance"),
@@ -197,130 +204,117 @@ class _DashboardScreenState extends State<DashboardScreen>
           AttendScreen(),
           ReportScreen(),
           SetScreen(),
-          //ProfileScreen(),
-          //StudentScreen(),
-          // Overview Tab
-          /*SingleChildScrollView(
-            padding: EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Top starts
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: _buildStatCard(
-                        "Students",
-                        "",
-                        Icons.show_chart,
-                        color: Colors.green,
-                      ),
-                    ),
-                    SizedBox(width: 12),
-                    Expanded(
-                      child: _buildStatCard(
-                        "Classes Today",
-                        "scheduled",
-                        Icons.access_time,
-                        color: Colors.indigo,
-                      ),
-                    ),
-                    SizedBox(height: 24),
-                    Text(
-                      "Quick Actions",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    SizedBox(height: 12),
-                    GridView.count(
-                      crossAxisSpacing: 12,
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 12,
-                      shrinkWrap: true,
-                      childAspectRatio: 3,
-                      children: [
-                        _buildQuickActions(
-                          Icons.check_circle,
-                          "Mark Attendance",
-                          "Quick check in",
-                          Colors.white,
-                          Colors.green,
-                        ),
-                        _buildQuickActions(
-                          Icons.person_add,
-                          "Add Student",
-                          "New enrollment",
-                          Colors.white,
-                          Colors.indigo,
-                        ),
-                        _buildQuickActions(
-                          Icons.bar_chart,
-                          "View Reports",
-                          "Analytics & insights",
-                          Colors.white,
-                          Colors.purple,
-                        ),
-                        _buildQuickActions(
-                          Icons.notifications,
-                          "Send Notice",
-                          "Communicate",
-                          Colors.white,
-                          Colors.orange,
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 24),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Recent Activities",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Text(
-                          "View All",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: Colors.indigo,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 12),
-                    Container(
-                      width: double.infinity,
-                      padding: EdgeInsets.symmetric(
-                        vertical: 16,
-                        horizontal: 20,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Text(
-                        "Attendance Marked",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Center(child: Text("Attendance Screen"),),
-                Center(child: Text("Reports Screen"),),
-                Center(child: Text("Setting Screen"),),
-              ],
-            ),
-          )*/
         ],
       ),
     );
   }
+}
+
+Drawer buildAppDrawer(BuildContext context) {
+  return Drawer(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topRight: Radius.circular(40),
+        bottomRight: Radius.circular(40),
+      ),
+    ),
+    child: Column(
+      children: [
+        Container(
+          width: double.infinity,
+          padding: EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFF1565C0), Color(0xFF00C49A)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.only(topRight: Radius.circular(40)),
+          ),
+          child: Row(
+            children: [
+              CircleAvatar(
+                radius: 28,
+                backgroundColor: Colors.white.withOpacity(0.3),
+                child: Text(
+                  "LA",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              SizedBox(width: 16),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Lavkush",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18,
+                    ),
+                  ),
+                  Text(
+                    "Kulbhaskar Ashram PG College",
+                    style: TextStyle(color: Colors.white, fontSize: 13),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        SizedBox(height: 10),
+
+        Expanded(
+          child: ListView(
+            padding: EdgeInsets.symmetric(vertical: 10),
+            children: [
+              buildDrawerItem(Icons.grid_view, "Overview", () {}),
+              buildDrawerItem(Icons.check_circle, "Attendance", () {}),
+              buildDrawerItem(Icons.bar_chart, "Reports", () {}),
+              buildDrawerItem(Icons.settings, "Settings", () {}),
+              buildDrawerItem(Icons.person_add_alt, "Student", () {}),
+              buildDrawerItem(Icons.school, "School", () {}),
+            ],
+          ),
+        ),
+        Divider(height: 1),
+        Padding(
+          padding: EdgeInsets.all(20),
+          child: Row(
+            children: [
+              Icon(Icons.logout, color: Colors.red),
+              SizedBox(width: 10),
+              Text(
+                "Logout",
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget buildDrawerItem(IconData icon, String text, VoidCallback onTap) {
+  return ListTile(
+    leading: Icon(icon, color: Colors.blue, size: 26),
+    title: Text(
+      text,
+      style: TextStyle(
+        fontSize: 16,
+        color: Colors.black87,
+        fontWeight: FontWeight.w500,
+      ),
+    ),
+    onTap: onTap,
+  );
 }

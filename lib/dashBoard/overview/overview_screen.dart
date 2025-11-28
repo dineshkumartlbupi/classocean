@@ -8,13 +8,14 @@ class OverviewScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       
-      backgroundColor: const Color(0xFFF7F9FB),
+      backgroundColor: Colors.white,
       
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: Container(
+
         padding: const EdgeInsets.all(1),
         decoration: BoxDecoration(
-          color: const Color(0xFF2F6BFF),
+          color: const Color(0xFF5DCCFC),
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
@@ -29,6 +30,10 @@ class OverviewScreen extends StatelessWidget {
           children: [
             Icon(Icons.add, color: Colors.white),
             TextButton(
+             /* style: TextButton.styleFrom(
+                backgroundColor: Color(0xFF5DCCFC),
+                foregroundColor: Colors.white
+              ),*/
               onPressed: () {
                 Navigator.pushReplacement(
                   context,
@@ -36,6 +41,7 @@ class OverviewScreen extends StatelessWidget {
                 );
               },
               child: Text(
+
                 "Quick Add",
                 style: TextStyle(
                   color: Colors.white,

@@ -69,7 +69,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Profile ",style: TextStyle(color: Color(0xff5DCCFC)),)),
+      appBar: AppBar(
+          backgroundColor: Color(0xFF5DCCFC),
+        centerTitle: true,
+          title: Text("Profile ",style: TextStyle(color: Colors.black87,fontSize: 30),)),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16),
         child: Column(
@@ -80,7 +83,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 Text(
                   "Select Profile type:",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600,color: Colors.black87),
                 ),
                 DropdownButton<String>(
                   items: [
@@ -88,7 +91,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       value: "Students",
                       child: Text("Students"),
                     ),
-                    DropdownMenuItem(value: "Teacher", child: Text("Teacher")),
+                    DropdownMenuItem(
+                        value: "Teacher", child: Text("Teacher")),
                   ],
                   onChanged: (val) {
                     setState(() {
@@ -150,7 +154,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 decoration: InputDecoration(
                   labelText: " Number of Periods",
                   prefixIcon: Icon(Icons.schedule),
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    
+                  ),
                 ),
               ),
             ],
@@ -187,8 +193,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const SizedBox(height: 20),
             ElevatedButton.icon(
               onPressed: _saveProfile,
-              label: Text("Save Profile"),
+              label: Text("Save Profile",style: TextStyle(color: Colors.white,fontSize: 20),),
               style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFF5DCCFC),
 
                 minimumSize: Size(double.infinity, 48),
               ),

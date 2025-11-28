@@ -61,6 +61,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
               if (pickedLocalFile != null) {
                 return CircleAvatar(
                   radius: 42,
+                  backgroundColor: Color(0xFF5DCCFC),
                   backgroundImage: FileImage(pickedLocalFile!),
                 );
               } else if (previewNetworkUrl != null &&
@@ -253,10 +254,10 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
         children: [
           Text(
             'Date: $dateId',
-            style: const TextStyle(fontWeight: FontWeight.w600),
+            style: const TextStyle(fontWeight: FontWeight.w600,color: Colors.black87),
           ),
           const Spacer(),
-          Text('Total: ${studentsDocs.length}'),
+          Text('Total: ${studentsDocs.length}',style: TextStyle(color: Colors.black87),),
         ],
       ),
     );
@@ -266,12 +267,13 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Color(0xFF5DCCFC),
         title: const Text('Attendance'),
         actions: [
           IconButton(
+            color: Color(0xFF5DCCFC),
             onPressed: _pickDate,
-            icon: const Icon(Icons.calendar_month),
+            icon: const Icon(Icons.calendar_month,color: Colors.black87,),
           ),
         ],
       ),
@@ -290,13 +292,14 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
+                    color: Colors.black87
                   ),
                 ),
                 const SizedBox(width: 12),
                 ElevatedButton.icon(
                   onPressed: _pickDate,
-                  icon: const Icon(Icons.edit_calendar),
-                  label: const Text('Change Date'),
+                  icon: const Icon(Icons.edit_calendar,color: Colors.black87,),
+                  label: const Text('Change Date',style: TextStyle(color: Colors.black87),),
                 ),
               ],
             ),
@@ -351,7 +354,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                 child: ListTile(
                                   leading: CircleAvatar(
                                     radius: 28,
-                                    backgroundColor: Colors.grey.shade200,
+                                    backgroundColor: Color(0xFF5DCCFC),
                                     backgroundImage:
                                         (imageUrl != null &&
                                             imageUrl.isNotEmpty)
@@ -365,7 +368,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                   title: Text(
                                     name,
                                     style: const TextStyle(
-                                      fontWeight: FontWeight.w600,
+                                      fontWeight: FontWeight.w600,color: Colors.black87
                                     ),
                                   ),
                                   subtitle: Text(
@@ -391,6 +394,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                     ],
                                   ),
                                   onTap: () {
+
                                     // Optionally show student detail or quick toggle
                                     _toggleAttendance(id, isPresent);
                                   },

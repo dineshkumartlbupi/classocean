@@ -346,12 +346,12 @@ class _StudentScreenState extends State<StudentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Student Registration"),
-        backgroundColor: Colors.blue,
+        title: Text("Student Add", style: TextStyle(color: Colors.black)),
+        backgroundColor: Color(0xFF5DCCFC),
       ),
 
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.all(18),
         child: Column(
           children: [
             /// --- FORM START ---
@@ -365,6 +365,7 @@ class _StudentScreenState extends State<StudentScreen> {
                     decoration: InputDecoration(
                       labelText: "Student Name",
                       border: OutlineInputBorder(),
+                      prefixIconColor: Color(0xFF5DCCFC),
                     ),
                     validator: (v) => v!.isEmpty ? "Enter student name" : null,
                   ),
@@ -384,7 +385,9 @@ class _StudentScreenState extends State<StudentScreen> {
                   /// Roll No
                   TextFormField(
                     controller: rollController,
+
                     decoration: InputDecoration(
+
                       labelText: "Roll Number",
                       border: OutlineInputBorder(),
                     ),
@@ -437,10 +440,25 @@ class _StudentScreenState extends State<StudentScreen> {
                     child: ElevatedButton(
                       onPressed: saveStudent,
                       style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: 14),
-                        textStyle: TextStyle(fontSize: 17),
+                        foregroundColor: Color(0xFF5DCCFC),
+                        backgroundColor: Color(0xFF5DCCFC),
+                        padding: EdgeInsets.only(
+                          left: 120,
+                          right: 120,
+                          top: 13,
+                          bottom: 13,
+                        ),
+                        shape: RoundedRectangleBorder(),
+
+                        textStyle: TextStyle(
+                          fontSize: 17,
+                          color: Colors.black87,
+                        ),
                       ),
-                      child: Text("Save"),
+                      child: Text(
+                        "Save",
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ),
                 ],
@@ -479,15 +497,19 @@ class _StudentScreenState extends State<StudentScreen> {
                       elevation: 3,
                       child: ListTile(
                         leading: CircleAvatar(
-                          backgroundColor: Colors.blue,
+                          backgroundColor: Color(0xFF5DCCFC),
                           child: Text(
                             letter,
                             style: TextStyle(color: Colors.white, fontSize: 20),
                           ),
                         ),
-                        title: Text(name),
+                        title: Text(
+                          name,
+                          style: TextStyle(color: Colors.black87),
+                        ),
                         subtitle: Text(
                           "Class: ${data['class']} | Section: ${data['section']}",
+                          style: TextStyle(color: Colors.black87),
                         ),
                       ),
                     );
