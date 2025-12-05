@@ -2,6 +2,8 @@ import 'package:classocean/dashBoard/atten/attend_screen.dart';
 import 'package:classocean/dashBoard/overview/overview_screen.dart';
 import 'package:classocean/dashBoard/report/report_screen.dart';
 import 'package:classocean/dashBoard/set_screen/set_screen.dart';
+import 'package:classocean/design/profileScreen/profile_screen.dart';
+import 'package:classocean/design/studentsScreen/student_screen.dart';
 import 'package:flutter/material.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -157,12 +159,11 @@ class _DashboardScreenState extends State<DashboardScreen>
           ),
           // Menu button opens Drawer
           IconButton(
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
-            icon: Icon(Icons.menu, color: Colors.black),
+            onPressed: () {},
+            icon: Icon(Icons.circle, color: Colors.white),
           ),
         ],
+
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(45),
           child: Padding(
@@ -181,7 +182,6 @@ class _DashboardScreenState extends State<DashboardScreen>
                 horizontal: -6,
                 vertical: 4,
               ),
-
               labelStyle: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w600,
@@ -220,6 +220,7 @@ Drawer buildAppDrawer(BuildContext context) {
     ),
     child: Column(
       children: [
+        SizedBox(height: 10),
         Container(
           width: double.infinity,
           padding: EdgeInsets.all(20),
@@ -231,6 +232,7 @@ Drawer buildAppDrawer(BuildContext context) {
             ),
             borderRadius: BorderRadius.only(topRight: Radius.circular(40)),
           ),
+
           child: Row(
             children: [
               CircleAvatar(
@@ -272,11 +274,36 @@ Drawer buildAppDrawer(BuildContext context) {
           child: ListView(
             padding: EdgeInsets.symmetric(vertical: 10),
             children: [
-              buildDrawerItem(Icons.grid_view, "Overview", () {}),
-              buildDrawerItem(Icons.check_circle, "Attendance", () {}),
-              buildDrawerItem(Icons.bar_chart, "Reports", () {}),
-              buildDrawerItem(Icons.settings, "Settings", () {}),
-              buildDrawerItem(Icons.person_add_alt, "Student", () {}),
+              buildDrawerItem(Icons.grid_view, "Overview", () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DashboardScreen()),
+                );
+              }),
+              buildDrawerItem(Icons.check_circle, "Attendance", () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AttendScreen()),
+                );
+              }),
+              buildDrawerItem(Icons.bar_chart, "Reports", () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ReportScreen()),
+                );
+              }),
+              buildDrawerItem(Icons.settings, "Settings", () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfileScreen()),
+                );
+              }),
+              buildDrawerItem(Icons.person_add_alt, "Student", () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => StudentScreen()),
+                );
+              }),
               buildDrawerItem(Icons.school, "School", () {}),
             ],
           ),

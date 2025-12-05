@@ -18,7 +18,7 @@ class _OnboardingScreen1State extends State<OnboardingScreen1> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 2),(){
+    Timer(Duration(milliseconds: 600),(){
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> OnboardingScreen2()));
     });
   }

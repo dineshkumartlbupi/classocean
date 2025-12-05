@@ -467,7 +467,7 @@ class _StudentScreenState extends State<StudentScreen> {
             SizedBox(height: 25),
 
             /// Students List (Live From Firestore)
-            StreamBuilder<QuerySnapshot>(
+           /* StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection("students")
                   .orderBy("createdAt", descending: true)
@@ -516,7 +516,7 @@ class _StudentScreenState extends State<StudentScreen> {
                   },
                 );
               },
-            ),
+            ),*/
           ],
         ),
       ),
