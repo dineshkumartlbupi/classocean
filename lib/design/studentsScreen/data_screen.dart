@@ -1,18 +1,19 @@
 import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
-class AttendanceScreen extends StatefulWidget {
-  const AttendanceScreen({super.key});
+class DataScreen extends StatefulWidget {
+  const DataScreen({super.key});
 
   @override
-  State<AttendanceScreen> createState() => _AttendanceScreenState();
+  State<DataScreen> createState() => _DataScreenState();
 }
 
-class _AttendanceScreenState extends State<AttendanceScreen> {
+class _DataScreenState extends State<DataScreen> {
   final studentsRef = FirebaseFirestore.instance.collection('students');
   final attendanceRef = FirebaseFirestore.instance.collection('attendance');
 
@@ -282,10 +283,10 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
           ),
         ],
       ),
-       /*floatingActionButton: FloatingActionButton(
+      /* floatingActionButton: FloatingActionButton(
         onPressed: _showAddStudentDialog,
         child: const Icon(Icons.person_add),
-      ),*/
+      )*/
       body: Column(
         children: [
           Padding(

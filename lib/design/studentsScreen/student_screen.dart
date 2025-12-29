@@ -257,6 +257,8 @@ class _StudentScreenState extends State<StudentScreen> {
 }
 */
 
+import 'package:classocean/dashBoard/dashBoard_screen.dart';
+import 'package:classocean/design/bottomnavscreen/bottom_nav_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -344,130 +346,144 @@ class _StudentScreenState extends State<StudentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Student Add", style: TextStyle(color: Colors.black)),
-        backgroundColor: Color(0xFF5DCCFC),
-      ),
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => BottomNavScreen()),
+        );
+        return false;
+      },
 
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(18),
-        child: Column(
-          children: [
-            /// --- FORM START ---
-            Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  /// Student Name
-                  TextFormField(
-                    controller: nameController,
-                    decoration: InputDecoration(
-                      labelText: "Student Name",
-                      border: OutlineInputBorder(),
-                      prefixIconColor: Color(0xFF5DCCFC),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Student Add", style: TextStyle(color: Colors.black)),
+          backgroundColor: Color(0xFF5DCCFC),
+        ),
+
+        body: SingleChildScrollView(
+          padding: EdgeInsets.all(18),
+          child: Column(
+            children: [
+              /// --- FORM START ---
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    /// Student Name
+                    TextFormField(
+                      controller: nameController,
+                      decoration: InputDecoration(
+                        labelText: "Student Name",
+                        border: OutlineInputBorder(),
+                        prefixIconColor: Color(0xFF5DCCFC),
+                      ),
+                      validator: (v) =>
+                          v!.isEmpty ? "Enter student name" : null,
                     ),
-                    validator: (v) => v!.isEmpty ? "Enter student name" : null,
-                  ),
-                  SizedBox(height: 12),
+                    SizedBox(height: 12),
 
-                  /// Father's Name
-                  TextFormField(
-                    controller: fatherController,
-                    decoration: InputDecoration(
-                      labelText: "Father's Name",
-                      border: OutlineInputBorder(),
+                    /// Father's Name
+                    TextFormField(
+                      controller: fatherController,
+                      decoration: InputDecoration(
+                        labelText: "Father's Name",
+                        border: OutlineInputBorder(),
+                      ),
+                      validator: (v) =>
+                          v!.isEmpty ? "Enter father's name" : null,
                     ),
-                    validator: (v) => v!.isEmpty ? "Enter father's name" : null,
-                  ),
-                  SizedBox(height: 12),
+                    SizedBox(height: 12),
 
-                  /// Roll No
-                  TextFormField(
-                    controller: rollController,
+                    /// Roll No
+                    TextFormField(
+                      controller: rollController,
 
-                    decoration: InputDecoration(
-
-                      labelText: "Roll Number",
-                      border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText: "Roll Number",
+                        border: OutlineInputBorder(),
+                      ),
+                      keyboardType: TextInputType.number,
+                      validator: (v) => v!.isEmpty ? "Enter roll number" : null,
                     ),
-                    keyboardType: TextInputType.number,
-                    validator: (v) => v!.isEmpty ? "Enter roll number" : null,
-                  ),
-                  SizedBox(height: 12),
+                    SizedBox(height: 12),
 
-                  /// Class Dropdown
-                  DropdownButtonFormField(
-                    decoration: InputDecoration(
-                      labelText: "Select Class",
-                      border: OutlineInputBorder(),
+                    /// Class Dropdown
+                    DropdownButtonFormField(
+                      decoration: InputDecoration(
+                        labelText: "Select Class",
+                        border: OutlineInputBorder(),
+                      ),
+                      value: selectedClass,
+                      items: classList
+                          .map(
+                            (e) => DropdownMenuItem(value: e, child: Text(e)),
+                          )
+                          .toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          selectedClass = value as String;
+                        });
+                      },
+                      validator: (v) => v == null ? "Select class" : null,
                     ),
-                    value: selectedClass,
-                    items: classList
-                        .map((e) => DropdownMenuItem(value: e, child: Text(e)))
-                        .toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        selectedClass = value as String;
-                      });
-                    },
-                    validator: (v) => v == null ? "Select class" : null,
-                  ),
-                  SizedBox(height: 12),
+                    SizedBox(height: 12),
 
-                  /// Section Dropdown
-                  DropdownButtonFormField(
-                    decoration: InputDecoration(
-                      labelText: "Select Section",
-                      border: OutlineInputBorder(),
+                    /// Section Dropdown
+                    DropdownButtonFormField(
+                      decoration: InputDecoration(
+                        labelText: "Select Section",
+                        border: OutlineInputBorder(),
+                      ),
+                      value: selectedSection,
+                      items: sectionList
+                          .map(
+                            (e) => DropdownMenuItem(value: e, child: Text(e)),
+                          )
+                          .toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          selectedSection = value as String;
+                        });
+                      },
+                      validator: (v) => v == null ? "Select section" : null,
                     ),
-                    value: selectedSection,
-                    items: sectionList
-                        .map((e) => DropdownMenuItem(value: e, child: Text(e)))
-                        .toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        selectedSection = value as String;
-                      });
-                    },
-                    validator: (v) => v == null ? "Select section" : null,
-                  ),
-                  SizedBox(height: 20),
+                    SizedBox(height: 20),
 
-                  /// Save Button
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: saveStudent,
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Color(0xFF5DCCFC),
-                        backgroundColor: Color(0xFF5DCCFC),
-                        padding: EdgeInsets.only(
-                          left: 120,
-                          right: 120,
-                          top: 13,
-                          bottom: 13,
+                    /// Save Button
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: saveStudent,
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Color(0xFF5DCCFC),
+                          backgroundColor: Color(0xFF5DCCFC),
+                          padding: EdgeInsets.only(
+                            left: 120,
+                            right: 120,
+                            top: 13,
+                            bottom: 13,
+                          ),
+                          shape: RoundedRectangleBorder(),
+
+                          textStyle: TextStyle(
+                            fontSize: 17,
+                            color: Colors.black87,
+                          ),
                         ),
-                        shape: RoundedRectangleBorder(),
-
-                        textStyle: TextStyle(
-                          fontSize: 17,
-                          color: Colors.black87,
+                        child: Text(
+                          "Save",
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
-                      child: Text(
-                        "Save",
-                        style: TextStyle(color: Colors.white),
-                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 25),
+              SizedBox(height: 25),
 
-            /// Students List (Live From Firestore)
-           /* StreamBuilder<QuerySnapshot>(
+              /// Students List (Live From Firestore)
+               StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection("students")
                   .orderBy("createdAt", descending: true)
@@ -516,8 +532,9 @@ class _StudentScreenState extends State<StudentScreen> {
                   },
                 );
               },
-            ),*/
-          ],
+            ),
+            ],
+          ),
         ),
       ),
     );

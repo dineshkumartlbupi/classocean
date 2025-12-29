@@ -3,6 +3,7 @@ import 'package:classocean/dashBoard/overview/overview_screen.dart';
 import 'package:classocean/dashBoard/report/report_screen.dart';
 import 'package:classocean/dashBoard/set_screen/set_screen.dart';
 import 'package:classocean/design/profileScreen/profile_screen.dart';
+import 'package:classocean/design/studentsScreen/data_screen.dart';
 import 'package:classocean/design/studentsScreen/student_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -301,7 +302,7 @@ Drawer buildAppDrawer(BuildContext context) {
               buildDrawerItem(Icons.person_add_alt, "Student", () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => StudentScreen()),
+                  MaterialPageRoute(builder: (context) => DataScreen()),
                 );
               }),
               buildDrawerItem(Icons.school, "School", () {}),
