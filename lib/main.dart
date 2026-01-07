@@ -1,5 +1,6 @@
 import 'package:classocean/firebase_options.dart';
-import 'package:classocean/screen/onboading_screen/onboarding_screen1.dart';
+import 'package:classocean/screen/onboading_screen/onboading_screen1.dart';
+import 'package:classocean/screen/onboading_screen/onboading_screen1.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 

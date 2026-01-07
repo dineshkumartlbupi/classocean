@@ -1,5 +1,4 @@
 import 'package:classocean/design/bottomnavscreen/bottom_nav_screen.dart';
-import 'package:classocean/login/login_screen.dart';
 import 'package:classocean/screen/onboading_screen/welcome_screen.dart';
 import 'package:classocean/screen/uihelper.dart';
 import 'package:firebase_auth/firebase_auth.dart';

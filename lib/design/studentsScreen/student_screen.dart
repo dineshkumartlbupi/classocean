@@ -357,6 +357,7 @@ class _StudentScreenState extends State<StudentScreen> {
 
       child: Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: Text("Student Add", style: TextStyle(color: Colors.black)),
           backgroundColor: Color(0xFF5DCCFC),
         ),
@@ -448,7 +449,7 @@ class _StudentScreenState extends State<StudentScreen> {
                       },
                       validator: (v) => v == null ? "Select section" : null,
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 100),
 
                     /// Save Button
                     SizedBox(
